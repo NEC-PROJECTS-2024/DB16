@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Retrieving For Text</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        section{
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .comment-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width:55%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            height:80px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        .result-container {
+            width:800px;
+            margin-top: 30px;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            background-color:white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding:15px;
+            width:100%;
+        }
+
+        img {
+            max-width:400px;
+            height:350px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Retrieving Relevant Image to the Given Text</h2>
+        <div class="comment-container">
+            <h2>Leave a Comment</h2>
+            <form action="/" method="post" autocomplete="off">
+                <label for="comment">Your Comment:</label>
+                <input type="text" id="comment" name="comment" placeholder="Enter Comment">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        {% if response %}
+            <p>{{response}}</p>
+        {% endif %}
+        {% if results %}
+        <div class="result-container">
+            <h2>Results</h2>
+            {% for result in results %}
+            <div class="result-item">
+                <p>Text: {{ result[2] }}</p>
+                <img src="{{ url_for('static', filename='Images/' + result[0]) }}" alt="Image">
+                <p>Similarity Score: {{ result[1] }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </section>
+    
+</body>
+</html>
+
+<!-- index.html -->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Similarity</title>
+</head>
+<body>
+    <h1>Enter Comment(s)</h1>
+    <form action="/result" method="POST">
+        <textarea name="comments" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+-->
